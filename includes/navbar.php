@@ -15,7 +15,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <ul class="nav-links">
             <li><a href="../public/index.php" class="<?php echo ($current_page === 'index.php') ? 'active' : ''; ?>">Inicio</a></li>
             <li><a href="../views/catalogo.php" class="<?php echo ($current_page === 'catalogo.php') ? 'active' : ''; ?>">Catálogo</a></li>
-            <li><a href="../views/subastas.php">Subastas</a></li>
+            <li><a href="../views/subastas.php" class="<?php echo ($current_page === 'subastas.php') ? 'active' : ''; ?>">Subastas</a></li>
             <li><a href="#">Asesores</a></li>
             <li><a href="#">Probador</a></li>
         </ul>

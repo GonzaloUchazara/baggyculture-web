@@ -1,3 +1,9 @@
+<?php
+require_once __DIR__ . '/../config/conexion.php';
+require_once __DIR__ . '/../models/Subasta.php';
+$modeloSubasta = new subasta($pdo);
+$subastas = $modeloSubasta->obtenersubastasactivas();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,6 +65,58 @@
 
     </div>
   </section>
+
+
+  <div class="contenedor-subastas-grid">
+    <?php if (!empty($subastas)): ?>
+      <?php foreach ($subastas as $sub): ?>
+        <?php 
+          $foto_nombre = !empty($sub['foto_pro']) ? $sub['foto_pro'] : (!empty($sub['foto']) ? $sub['foto'] : '');
+          $ruta_fisica = __DIR__ . '/../public/uploads/productos/' . $foto_nombre;
+          $foto_principal = (!empty($foto_nombre) && file_exists($ruta_fisica)) 
+              ? '../public/uploads/productos/' . $foto_nombre 
+              : '../public/uploads/default.jpg';
+        ?>
+
+        <a href="detalle_subasta.php?id=<?= $sub['id_subasta'] ?>" class="card-lote-subasta">
+                <!-- Contenedor Imagen y Badges -->
+                <div class="card-imagen-wrapper">
+                    <span class="badge-en-vivo">• EN VIVO</span>
+                    <img src="<?= htmlspecialchars($foto_principal) ?>" alt="<?= htmlspecialchars($sub['nombre']) ?>">
+                    
+                    <!-- Barra flotante de tiempo -->
+                    <div class="barra-tiempo-restante" data-fin="<?= $sub['fecha_fin'] ?>">
+                        <span class="label-tiempo">TIEMPO RESTANTE</span>
+                        <span class="cronometro-tiempo">--h --m --s</span>
+                    </div>
+
+                    
+                </div>
+
+                <div class="card-datos">
+                    <p class="lote-categoria">LOTE #<?= str_pad($sub['id_subasta'], 3, '0', STR_PAD_LEFT) ?> • SUBASTA</p>
+                    <h3 class="lote-titulo"><?= htmlspecialchars($sub['nombre']) ?></h3>
+                    <p class="lote-subtitulo"><?= htmlspecialchars(substr($sub['descripcion'] ?? 'Prenda exclusiva', 0, 45)) ?>...</p>
+
+                    <!-- Caja Gris de Puja Actual -->
+                    <div class="caja-resumen-puja">
+                        <div class="col-puja">
+                            <span class="label-puja">PUJA ACTUAL</span>
+                            <span class="valor-puja">Bs. <?= number_format($sub['precio_actual'], 0, ',', '.') ?></span>
+                        </div>
+                        <div class="col-conteo">
+                            <span class="label-pujas-count">PUJAS</span>
+                            <span class="valor-count">⚡ <?= $sub['total_pujas'] ?? '0' ?> pujas</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p class="sin-subastas">No hay subastas activas por el momento.</p>
+    <?php endif; ?>
+</div>
+
 
 
 
@@ -128,6 +186,6 @@
     </div>
   </footer>
 
-  
+  <script src="../assets/js/subastatimer.js"></script>
 </body>
 </html>

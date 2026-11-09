@@ -336,9 +336,9 @@ body {
   transform: translateY(-2px);
 }
 
-/* =========================================
+/* 
    RESPONSIVE
-   ========================================= */
+    */
 @media (max-width: 1024px) {
   .steps-grid {
     grid-template-columns: 1fr;
@@ -366,4 +366,148 @@ body {
   .footer-socials {
     align-self: flex-start;
   }
+}
+
+
+
+
+/*cards de las subastas */
+
+/* public/css/subastas_grid.css */
+.contenedor-subastas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 22px;
+    max-width: 1200px;
+    margin: 25px auto 50px auto;
+    padding: 0 15px;
+}
+
+.card-lote-subasta {
+    display: block;
+    background: #ffffff;
+    border-radius: 18px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid #ebebeb;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card-lote-subasta:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+.card-imagen-wrapper {
+    position: relative;
+    width: 100%;
+    height: 310px;
+    background: #f5f5f5;
+    overflow: hidden;
+}
+
+.card-imagen-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.badge-en-vivo {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: #e50914;
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+    z-index: 2;
+}
+
+.barra-tiempo-restante {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    background: rgba(10, 10, 10, 0.82);
+    backdrop-filter: blur(6px);
+    color: #ffffff;
+    border-radius: 10px;
+    padding: 8px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.78rem;
+    z-index: 2;
+}
+
+.label-tiempo {
+    font-weight: 600;
+    color: #b5b5b5;
+    letter-spacing: 0.5px;
+}
+
+.cronometro-tiempo {
+    color: #f7a01d;
+    font-weight: 700;
+}
+
+.card-datos {
+    padding: 16px 16px 18px 16px;
+}
+
+.lote-categoria {
+    font-size: 0.72rem;
+    color: #cf7143;
+    font-weight: 700;
+    margin: 0 0 5px 0;
+    text-transform: uppercase;
+}
+
+.lote-titulo {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin: 0 0 4px 0;
+    color: #1a1a1a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.lote-subtitulo {
+    font-size: 0.8rem;
+    color: #7a7a7a;
+    margin: 0 0 14px 0;
+}
+
+.caja-resumen-puja {
+    background: #f4f5f7;
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.label-puja, .label-pujas-count {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #8c8c8c;
+    letter-spacing: 0.5px;
+}
+
+.valor-puja {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #111111;
+}
+
+.valor-count {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #444;
 }
