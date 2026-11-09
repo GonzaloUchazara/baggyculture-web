@@ -1,0 +1,369 @@
+/* styles.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: #f8f9fa;
+  color: #1a1a1a;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 
+   HERO SECTION
+    */
+.hero-section {
+  position: relative;
+  width: 100%;
+  min-height: 440px;
+  /* Reemplaza la URL con la imagen de fondo de tu proyecto */
+  background-image: url('https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?q=80&w=1600&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 20px;
+}
+
+/* Capa oscura semitransparente para legibilidad */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.42);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 820px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Badge superior tipo píldora */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(40, 40, 40, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #e2e8f0;
+  margin-bottom: 22px;
+}
+
+.badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #ef4444;
+}
+
+/* Tipografía del Hero */
+.hero-title {
+  color: #ffffff;
+  font-size: 3.25rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+
+.hero-description {
+  color: #f1f5f9;
+  font-size: 1.05rem;
+  font-weight: 400;
+  line-height: 1.55;
+  max-width: 660px;
+  margin-bottom: 30px;
+  opacity: 0.92;
+}
+
+/* Features con iconos */
+.hero-features {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 28px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #cbd5e1;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.feature-item i {
+  color: #94a3b8;
+  font-size: 0.8rem;
+}
+
+/* 
+   FILTER BAR
+    */
+.filter-bar-section {
+  width: 100%;
+  background-color: #ffffff;
+  border-bottom: 1px solid #eef0f2;
+}
+
+.filter-bar-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+/* Botones de pestaña */
+.filter-tabs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tab-btn {
+  border: none;
+  background: transparent;
+  padding: 8px 18px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 999px;
+  cursor: pointer;
+  color: #64748b;
+  transition: all 0.2s ease-in-out;
+}
+
+.tab-btn:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+.tab-btn.active {
+  background-color: #0f172a;
+  color: #ffffff;
+}
+
+/* Texto informativo a la derecha */
+.filter-info {
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.filter-info strong {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+/* 
+   RESPONSIVE
+    */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.2rem;
+  }
+
+  .hero-description {
+    font-size: 0.95rem;
+  }
+
+  .hero-features {
+    gap: 16px;
+    flex-direction: column;
+  }
+
+  .filter-bar-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .filter-tabs {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+}
+
+
+.how-it-works-section {
+  width: 100%;
+  background-color: #f7f7f8;
+  padding: 90px 24px 100px;
+}
+
+.how-it-works-container {
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.15rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: #111827;
+  margin-bottom: 50px;
+}
+
+/* Rejilla de los 3 pasos */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+/* Tarjeta individual */
+.step-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 44px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+/* Círculo numérico */
+.step-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #171717;
+  color: #ffffff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.step-title {
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 14px;
+  letter-spacing: -0.015em;
+}
+
+.step-description {
+  font-size: 0.94rem;
+  line-height: 1.55;
+  color: #6b7280;
+  max-width: 320px;
+}
+
+/* =========================================
+   FOOTER
+   ========================================= */
+.footer {
+  width: 100%;
+  background-color: #141414;
+  color: #ffffff;
+  padding: 56px 24px 64px;
+}
+
+.footer-container {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.footer-left {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-logo {
+  font-size: 1.6rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+}
+
+.logo-dot {
+  color: #f59e0b;
+}
+
+.footer-copy {
+  font-size: 0.88rem;
+  color: #737373;
+}
+
+/* Iconos sociales */
+.footer-socials {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.social-link {
+  color: #a3a3a3;
+  font-size: 1.25rem;
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.2s ease;
+  display: inline-flex;
+}
+
+.social-link:hover {
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+@media (max-width: 1024px) {
+  .steps-grid {
+    grid-template-columns: 1fr;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  .step-description {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .section-title {
+    font-size: 1.65rem;
+    margin-bottom: 36px;
+  }
+
+  .footer-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+  }
+
+  .footer-socials {
+    align-self: flex-start;
+  }
+}

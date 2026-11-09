@@ -1,0 +1,129 @@
+/* ===================================================
+   NAVBAR COMPONENT STYLES
+   =================================================== */
+
+.navbar-container {
+  width: 100%;
+  background-color: #ffffff;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+}
+
+.navbar {
+  max-width: 1400px;
+  margin: 0 auto;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  box-sizing: border-box;
+}
+
+.nav-logo a {
+  text-decoration: none;
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #111111;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.nav-logo span {
+  color: #c98a58;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  font-size: 0.95rem;
+  color: #4a4a4a;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #000000;
+  font-weight: 700;
+}
+
+.nav-links a.highlight {
+  color: #b33939; 
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background-color: #f1f2f6;
+  border-radius: 20px;
+  padding: 0.4rem 0.8rem;
+  width: 220px;
+}
+
+.search-icon {
+  font-size: 0.8rem;
+  color: #888888;
+  margin-right: 0.4rem;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.85rem;
+  width: 100%;
+  color: #333333;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.search-box input::placeholder {
+  color: #999999;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #222222;
+  padding: 4px;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.icon-btn:hover {
+  color: #555555;
+  transform: translateY(-1px);
+}
+
+
+
+.hidden {
+    display: none !important;
+}
+
+
