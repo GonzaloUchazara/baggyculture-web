@@ -1,3 +1,8 @@
+<?php
+session_start();
+require_once 'conexion.php';
+$nombreUsuario = isset($_SESSION['nombre']) ? $_SESSION['nombre'] : (isset($_SESSION['usuario']) ? $_SESSION['usuario'] : 'Cuenta');
+?>
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
 <head>
@@ -88,7 +93,7 @@
                     <a href="subastas.php" class="hover:text-black transition-colors py-2 border-b-2 border-transparent hover:border-aura-accent">Subastas</a>
                     <a href="asesores.php" class="text-red-600 font-semibold hover:text-red-700 transition-colors py-2">Asesores</a>
                 </nav>
-
+                
                 <!-- Action Icons (Search, User, Cart) -->
                 <div class="flex items-center space-x-5">
                     <!-- Search Input Toggle -->
@@ -97,10 +102,18 @@
                         <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-gray-400 text-xs"></i>
                     </div>
 
-                    <!-- User Account -->
-                    <button onclick="toggleModal('user-modal')" class="text-gray-700 hover:text-black transition-colors p-1 relative" title="Cuenta">
-                        <i class="fa-regular fa-user text-lg"></i>
-                    </button>
+                    <!-- User Account / Sesión Activa -->
+                    <?php if (isset($_SESSION['correo']) || isset($_SESSION['id_usuario']) || isset($_SESSION['nombre'])): ?>
+                        <div class="flex items-center space-x-2 text-xs font-semibold text-aura-900 bg-gray-100 px-3 py-1.5 rounded-full">
+                            <i class="fa-regular fa-user text-aura-accent"></i>
+                            <span><?php echo htmlspecialchars($nombreUsuario); ?></span>
+                            <a href="index.php" class="text-red-500 hover:text-red-700 ml-1 text-[10px]" title="Cerrar Sesión">(Salir)</a>
+                        </div>
+                    <?php else: ?>
+                        <button onclick="toggleModal('user-modal')" class="text-gray-700 hover:text-black transition-colors p-1 relative" title="Cuenta">
+                            <i class="fa-regular fa-user text-lg"></i>
+                        </button>
+                    <?php endif; ?>
 
                     <!-- Cart Icon with Dynamic Counter -->
                     <button id="cart-btn" onclick="toggleCart(true)" class="text-gray-700 hover:text-black transition-colors p-1 relative" title="Carrito">
