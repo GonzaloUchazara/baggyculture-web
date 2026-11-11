@@ -56,6 +56,7 @@ $tiempo_fin_timestamp = strtotime($subasta['fecha_fin']);
 $es_finalizada = ($subasta['estado'] === 'finalizada' || $tiempo_fin_timestamp <= time());
 $minimo_siguiente = (float)$subasta['precio_actual'] + (float)$subasta['incremento_minimo'];
 $usuario_autenticado = isset($_SESSION['id_usuario']);
+$es_lider = $usuario_autenticado && (int)$subasta['id_ganador'] === (int)$_SESSION['id_usuario'];
 ?>
 
 <!DOCTYPE html>
@@ -66,7 +67,7 @@ $usuario_autenticado = isset($_SESSION['id_usuario']);
     <title><?= htmlspecialchars($subasta['nombre']) ?> | Subasta BaggyCulture</title>
     <link rel="stylesheet" href="../assets/css/subastadetalle.css">
 </head>
-<body>
+<body><?php include __DIR__ . '/../includes/navbar.php'; ?>
     <div style="max-width: 1100px; width: 100%; margin: 0 auto;">
         <a href="subastas.php" class="volver-link">
             ← Volver a Subastas
@@ -120,8 +121,9 @@ $usuario_autenticado = isset($_SESSION['id_usuario']);
                     <!-- Usuario no autenticado -->
                     <div class="login-requerido-box">
                         <p>🔒 Debes iniciar sesión con tu cuenta para poder realizar una oferta en esta subasta.</p>
-                        <a href="login.php" class="btn-ir-login">Iniciar Sesión para Pujar</a>
+                        <a href="login.php" ...> por <a href="#" class="btn-ir-login" onclick="document.getElementById('btnOpenLogin').click(); return false;">Iniciar Sesión para Pujar</a>
                     </div>
+                    <?php elseif ($es_lider): ?> <div class="login-requerido-box">...</div>
                 <?php else: ?>
                     <!-- Formulario de Puja Habilitado -->
                     <form id="form-puja-subasta" class="purchase-form" onsubmit="enviarPuja(event)">
