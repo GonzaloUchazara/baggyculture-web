@@ -38,19 +38,15 @@ $productos = $stmt->fetchAll();
   </div>
 </section>
 
-
-
 <div class="catalog-toolbar">
   <div class="catalog-toolbar-container">
     <p class="products-count">Mostrando </p>
-    
 
     <div class="toolbar-search">
         <form method="GET" action="">
             <input type="text" name="q" placeholder="Buscar en catalogo..." value="<?php echo htmlspecialchars($busqueda); ?>"/>
         </form>
     </div>
-
 
     <div class="sort-box">
       <label for="sort-select">Ordenar por:</label>
@@ -63,7 +59,6 @@ $productos = $stmt->fetchAll();
   </div>
 </div>
 
-
     <div class="catalogo-grid"> 
         <?php if (!empty($productos)): ?>
             <?php foreach ($productos as $producto): ?>
@@ -71,15 +66,11 @@ $productos = $stmt->fetchAll();
                 $ruta_imagen = !empty($producto['foto_pro']) ? '../public/uploads/productos/' . $producto['foto_pro'] : '../public/uploads/default.jpg';
                 ?>
 
-                
+                <div class="card" data-precio="<?php echo $producto['precio']; ?>">
 
-
-                <div class="card">
                     <div class="card-media">
 
                         <a href="detalles.php?id_producto=<?php echo $producto['id_producto']; ?>"><img src="<?php echo htmlspecialchars($ruta_imagen); ?>" alt="<?php echo htmlspecialchars($producto['nombre']); ?>" class="card-img"> </a>
-
-
 
                         <?php if ($producto['calificacion'] >= 4.5): ?>
                             <span class="badge-bestseller">POPULAR</span>
@@ -105,9 +96,6 @@ $productos = $stmt->fetchAll();
 
                         <h3 class="card-title"><?php echo htmlspecialchars($producto['nombre']); ?></h3>
                         <div class="card-price"><?php echo number_format($producto['precio'], 2); ?> Bs</div>
-                        
-
-                        
 
                         <button class="btn-add" data-id="<?php echo $producto['id_producto']; ?>" type="button">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -123,6 +111,105 @@ $productos = $stmt->fetchAll();
         <?php endif; ?>
     </div>
 
-    
+    <!-- CORRECCIÓN: antes era "// Correcion 2: script con ordenamiento" (texto suelto fuera del script). Ahora es comentario HTML -->
+    <script>
+    // Correcion 2: script con ordenamiento
+    document.getElementById('sort-select').addEventListener('change', function () {
+        const grid = document.querySelector('.catalogo-grid');
+        const tarjetas = Array.from(grid.querySelectorAll('.card'));
+
+        tarjetas.sort((a, b) => {
+            if (this.value === 'precio-menor') return a.dataset.precio - b.dataset.precio;
+            if (this.value === 'precio-mayor') return b.dataset.precio - a.dataset.precio;
+            return 0;
+        });
+
+        tarjetas.forEach(t => grid.appendChild(t));
+    });
+
+    // Correcion 2: Funcionamiento del botor FAVORITOS
+    const favoritos = JSON.parse(localStorage.getItem('favoritos') || '[]');
+
+    document.querySelectorAll('.btn-wishlist').forEach(btn => {
+        const id = btn.dataset.id;
+
+        if (favoritos.includes(id)) btn.classList.add('activo');
+
+        btn.addEventListener('click', () => {
+            btn.classList.toggle('activo');
+
+            const pos = favoritos.indexOf(id);
+            if (pos === -1) favoritos.push(id);
+            else favoritos.splice(pos, 1);
+
+            localStorage.setItem('favoritos', JSON.stringify(favoritos));
+            if (soloFavoritos) aplicarFiltroFavoritos();
+        });
+    });
+
+    // Correcion 3 botón "Ver favoritos" 
+    let soloFavoritos = false;
+    const estilo = document.createElement('style');
+    estilo.textContent = `
+        .btn-ver-favoritos {
+            padding: 10px 20px;
+            border: 1px solid #e5e7eb;
+            border-radius: 999px;
+            background: #f3f4f6;
+            color: #111827;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+        .btn-ver-favoritos:hover { background: #e5e7eb; }
+        .btn-ver-favoritos.activo {
+            background: #111827;
+            border-color: #111827;
+            color: #fff;
+        }
+    `;
+    document.head.appendChild(estilo);
+
+    const btnVerFavoritos = document.createElement('button');
+    btnVerFavoritos.type = 'button';
+    btnVerFavoritos.className = 'btn-ver-favoritos';
+    btnVerFavoritos.textContent = '♥ Ver favoritos';
+    document.querySelector('.sort-box').before(btnVerFavoritos);
+
+    function aplicarFiltroFavoritos() {
+        document.querySelectorAll('.card').forEach(card => {
+            const marcado = card.querySelector('.btn-wishlist').classList.contains('activo');
+            card.style.display = (soloFavoritos && !marcado) ? 'none' : '';
+        });
+        btnVerFavoritos.textContent = soloFavoritos ? '← Ver todos' : '♥ Ver favoritos';
+        btnVerFavoritos.classList.toggle('activo', soloFavoritos);
+    }
+
+    btnVerFavoritos.addEventListener('click', () => {
+        soloFavoritos = !soloFavoritos;
+        aplicarFiltroFavoritos();
+    });
+
+    // Correccion 4: botón "Añadir al Carrito"
+    const carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
+
+    document.querySelectorAll('.btn-add').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const id = btn.dataset.id;
+
+            const item = carrito.find(p => p.id === id);
+            if (item) item.cantidad++;
+            else carrito.push({ id: id, cantidad: 1 });
+
+            localStorage.setItem('carrito', JSON.stringify(carrito));
+            const texto = btn.querySelector('span');
+            texto.textContent = '✓ Añadido';
+            setTimeout(() => texto.textContent = 'Añadir al Carrito', 1500);
+        });
+    });
+    </script>
+
 </body>
 </html>

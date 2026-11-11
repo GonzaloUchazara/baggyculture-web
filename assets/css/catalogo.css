@@ -340,3 +340,8 @@ body {
 .toolbar-search input::placeholder {
   color: #9ca3af;
 }
+/* Pinta el corazón de rojo cuando está activo */
+.btn-wishlist.activo svg {
+    fill: #e11d48;
+    stroke: #e11d48;
+}
