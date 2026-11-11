@@ -1,11 +1,11 @@
 <?php
 date_default_timezone_set('America/La_Paz');
 
-$host = "localhost";
-$port = "3307";                      
-$db   = "baggyculture"; 
-$user = "root";                     
-$pass = "";                         
+$host    = "127.0.0.1"; 
+$port    = "3308";    
+$db      = "baggyculture";
+$user    = "root";
+$pass    = "";
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;port=$port;dbname=$db;charset=$charset";
