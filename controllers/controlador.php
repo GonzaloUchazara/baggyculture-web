@@ -67,6 +67,10 @@ class Controlador {
 
 
     public function login(){
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
         if ($_SERVER['REQUEST_METHOD'] !== 'POST'){
             header('Location: ../public/index.php?error=campos_vacios');
             exit;
@@ -80,44 +84,41 @@ class Controlador {
         }
 
         $usuario = $this->usuarioModel->obtenerPorEmail($email);
+
+        if (!$usuario) {
+            $_SESSION['login_error'] = "El usuario o correo electrónico ingresado no existe.";
+            header('Location: ../public/index.php');
+            exit();
+        }
         $passwordHash = $usuario['password_hash'] ?? $usuario['password'] ?? '';
 
-        if($usuario && password_verify($password, $passwordHash))
-            {
-                if(session_status() === PHP_SESSION_NONE){
-                    session_start();
-                }
+        if (!password_verify($password, $passwordHash)) {
+            $_SESSION['login_error'] = "La contraseña ingresada es incorrecta.";
+            header('Location: ../public/index.php');
+            exit();
+        }
 
-            $_SESSION['id_usuario'] = $usuario['id_usuario'] ?? $usuario['id'] ?? null;
-            $_SESSION['nombre']     = $usuario['nombre'];
-            $_SESSION['rol']        = $usuario['rol'];
+        $_SESSION['id_usuario'] = $usuario['id_usuario'] ?? $usuario['id'] ?? null;
+        $_SESSION['nombre']     = $usuario['nombre'];
+        $_SESSION['rol']        = $usuario['rol'];
 
-            $_SESSION['login_exito'] = "¡Bienvenido de nuevo, " . htmlspecialchars($usuario['nombre']) . "! Has iniciado sesión correctamente.";
+        $_SESSION['login_exito'] = "¡Bienvenido de nuevo, " . htmlspecialchars($usuario['nombre']) . "! Has iniciado sesión correctamente.";
 
-
-
-
-            
-
-            switch ($_SESSION['rol']){
-                case 'admin':
-                    header('Location: ../views/admin/admin.php');
-                    exit();
-                case 'asesor':
-                    header('Location: ../views/admin/asesor.php');
-                    exit();
-                case 'subastador':
-                    header('Location: ../views/admin/subastador.php');
-                    exit();
-                case 'cliente':
-                default:
-                    header('Location: ../views/catalogo.php');
-                    exit();
-            }
-            }else {
-                header('Location: ../public/index.php?error=credenciales_incorrectas');
+        switch ($_SESSION['rol']){
+            case 'admin':
+                header('Location: ../views/admin/admin.php');
                 exit();
-            }
+            case 'asesor':
+                header('Location: ../views/admin/asesor.php');
+                exit();
+            case 'subastador':
+                header('Location: ../views/admin/subastador.php');
+                exit();
+            case 'cliente':
+            default:
+                header('Location: ../views/catalogo.php');
+                exit();
+        }
     }
 
 
