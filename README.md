@@ -63,7 +63,7 @@ baggyculture/
 
 ---
 
-## Equipo de Desarrollo
+## Equipo
 
 | Nombre Completo              | Rol / Módulo Asignado                        | Usuario GitHub                                                                           |
 | **Gerald Vidal Colque Luna** | Lógica y Validaciones de Registro de Usuario | [@estgeraldvidalcolquelu-oss](https://github.com/estgeraldvidalcolquelu-oss)             |
