@@ -92,6 +92,13 @@ class Controlador {
             $_SESSION['nombre']     = $usuario['nombre'];
             $_SESSION['rol']        = $usuario['rol'];
 
+            $_SESSION['login_exito'] = "¡Bienvenido de nuevo, " . htmlspecialchars($usuario['nombre']) . "! Has iniciado sesión correctamente.";
+
+
+
+
+            
+
             switch ($_SESSION['rol']){
                 case 'admin':
                     header('Location: ../views/admin/admin.php');
@@ -125,3 +132,5 @@ if($accion ==='registrar'){
 }else{
     $controlador->login();
 }
+
+

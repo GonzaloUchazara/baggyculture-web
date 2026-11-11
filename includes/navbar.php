@@ -1,4 +1,10 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+$current_page = basename($_SERVER['PHP_SELF']);
+?>
+<?php
 $current_page = basename($_SERVER['PHP_SELF']);
 ?>
 <link rel="stylesheet" href="../assets/css/navbar.css">
@@ -159,7 +165,49 @@ $current_page = basename($_SERVER['PHP_SELF']);
     </div>
 
 
-    <script src="../assets/js/login.js"></script>
+    
+
+
+
+
+
+    <?php if (isset($_SESSION['login_exito'])): ?>
+        <div id="toastSuccess" style="
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            background: #10b981;
+            color: #ffffff;
+            padding: 14px 22px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            font-size: 0.95rem;
+            font-weight: 500;
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: fadeInToast 0.4s ease-out;
+        ">
+        <span>✅</span>
+            <span><?php echo $_SESSION['login_exito']; ?></span>
+        </div>
+
+
+        <script>
+            
+            setTimeout(() => {
+                const toast = document.getElementById('toastSuccess');
+                if (toast) {
+                    toast.style.transition = 'opacity 0.5s ease';
+                    toast.style.opacity = '0';
+                    setTimeout(() => toast.remove(), 500);
+                }
+            }, 4000);
+        </script>
+        <?php unset($_SESSION['login_exito']); ?>
+    <?php endif; ?>
+        <script src="../assets/js/login.js"></script>
 </header>
 
 
