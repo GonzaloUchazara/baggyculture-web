@@ -1,14 +1,17 @@
 <?php
 require_once __DIR__ . '/../config/conexion.php';
 require_once __DIR__ . '/../models/usuario.php';
+require_once __DIR__ . '/../models/producto.php';
 
 class Controlador {
     private $usuarioModel;
+    private $productoModel;
     private $pdo;
 
     public function __construct($pdo) {
         $this->pdo = $pdo;
         $this->usuarioModel = new Usuario($pdo);
+        $this->productoModel = new Producto($pdo);
     }
 
     public function registrar() {
@@ -176,6 +179,73 @@ class Controlador {
         exit();
     }
 
+    public function agregarProducto() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Location: ../views/admin/admin.php');
+            exit();
+        }
+
+        $nombre       = trim($_POST['nombre'] ?? '');
+        $descripcion  = trim($_POST['descripcion'] ?? '');
+        $precio       = intval($_POST['precio'] ?? 0);
+        $stock        = intval($_POST['stock'] ?? 0);
+        $categoria    = trim($_POST['categoria'] ?? '');
+        $calificacion = floatval($_POST['calificacion'] ?? 5.00);
+        $estado       = $_POST['estado'] ?? 'activo';
+
+        if (empty($nombre) || $precio <= 0 || empty($categoria)) {
+            $_SESSION['admin_msg'] = ['tipo' => 'error', 'texto' => 'Completa los campos obligatorios (Nombre, Precio mayor a 0 y Categoría).'];
+            header('Location: ../views/admin/admin.php');
+            exit();
+        }
+
+        // Manejo de imagen en public/uploads/productos/
+        $nombreFoto = 'default.jpg';
+        if (isset($_FILES['foto_pro']) && $_FILES['foto_pro']['error'] === UPLOAD_ERR_OK) {
+            $ext = strtolower(pathinfo($_FILES['foto_pro']['name'], PATHINFO_EXTENSION));
+            $permitidas = ['jpg', 'jpeg', 'png', 'webp'];
+
+            if (in_array($ext, $permitidas)) {
+                $nombreFoto = 'prod_' . time() . '_' . rand(100, 999) . '.' . $ext;
+                $destino = __DIR__ . '/../public/uploads/productos/' . $nombreFoto;
+                move_uploaded_file($_FILES['foto_pro']['tmp_name'], $destino);
+            } else {
+                $_SESSION['admin_msg'] = ['tipo' => 'error', 'texto' => 'Formato de imagen no válido. Usa JPG, PNG o WEBP.'];
+                header('Location: ../views/admin/admin.php');
+                exit();
+            }
+        }
+
+        if ($this->productoModel->agregar($nombre, $descripcion, $precio, $stock, $categoria, $calificacion, $estado, $nombreFoto)) {
+            $_SESSION['admin_msg'] = ['tipo' => 'exito', 'texto' => '¡Producto agregado al catálogo correctamente!'];
+        } else {
+            $_SESSION['admin_msg'] = ['tipo' => 'error', 'texto' => 'Error al guardar el producto en la base de datos.'];
+        }
+
+        header('Location: ../views/admin/admin.php');
+        exit();
+    }
+
+    public function eliminarProducto() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        $id = intval($_GET['id'] ?? 0);
+        if ($id > 0 && $this->productoModel->eliminar($id)) {
+            $_SESSION['admin_msg'] = ['tipo' => 'exito', 'texto' => 'Producto eliminado correctamente.'];
+        } else {
+            $_SESSION['admin_msg'] = ['tipo' => 'error', 'texto' => 'No se pudo eliminar el producto.'];
+        }
+
+        header('Location: ../views/admin/admin.php');
+        exit();
+    }
+
     public function logout() {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
@@ -300,7 +370,7 @@ class Controlador {
             $cambios['nombre'] = $nombre;
         }
 
-        /
+        
         $apellidoOrig = $usuario['apellido'] ?? '';
         if ($apellido !== null && $apellido !== '' && $apellido !== $apellidoOrig) {
             $cambios['apellido'] = $apellido;
@@ -376,6 +446,10 @@ if ($accion === 'registrar') {
     $controlador->cambiarFoto();
 } elseif ($accion === 'actualizar_perfil' || $accion === 'actualizar_datos') {
     $controlador->actualizarPerfil();
+} elseif ($accion === 'agregar_producto' || $accion === 'crear_producto') {
+    $controlador->agregarProducto();
+} elseif ($accion === 'eliminar_producto') {
+    $controlador->eliminarProducto();
 } elseif ($accion === 'logout') {
     $controlador->logout();
 } else {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3307
--- Tiempo de generación: 11-11-2026 a las 13:14:19
+-- Tiempo de generación: 18-11-2026 a las 13:15:06
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,6 +20,38 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `baggyculture`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `auditoria`
+--
+
+CREATE TABLE `auditoria` (
+  `id_auditoria` int(11) NOT NULL,
+  `nombre_tabla` varchar(50) NOT NULL,
+  `operacion` varchar(50) NOT NULL,
+  `fecha_operacion` date NOT NULL,
+  `usuario_bd` varchar(50) NOT NULL,
+  `clave_registro` varchar(50) NOT NULL,
+  `momento` varchar(50) NOT NULL,
+  `datos_anteriores` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`datos_anteriores`)),
+  `datos_nuevos` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`datos_nuevos`))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `auditoria`
+--
+
+INSERT INTO `auditoria` (`id_auditoria`, `nombre_tabla`, `operacion`, `fecha_operacion`, `usuario_bd`, `clave_registro`, `momento`, `datos_anteriores`, `datos_nuevos`) VALUES
+(1, 'productos', 'INSERT', '2026-11-16', 'root@localhost', '8', 'AFTER', NULL, '{\"id_producto\": 8, \"nombre\": \"Hoodie Street Classic\", \"descripcion\": \"Polerón oversize de algodón friso premium\", \"precio\": 180, \"stock\": 15, \"categoria\": \"hoodies\", \"calificacion\": 5.00, \"estado\": \"activo\", \"foto_pro\": \"hoodie_classic.jpg\"}'),
+(2, 'productos', 'DELETE', '2026-11-16', 'root@localhost', '3', 'BEFORE', '{\"id_producto\": 3, \"nombre\": \"prueba3\", \"descripcion\": \"\", \"precio\": 30, \"stock\": 2, \"categoria\": \"baggy\", \"calificacion\": 5.00, \"estado\": \"activo\", \"foto_pro\": \"prueba3.jpg\"}', NULL),
+(3, 'productos', 'UPDATE', '2026-11-16', 'root@localhost', '2', 'AFTER', '{\"id_producto\": 2, \"nombre\": \"prueba2\", \"descripcion\": \"\", \"precio\": 50, \"stock\": 5, \"categoria\": \"baggy\", \"calificacion\": 3.00, \"estado\": \"activo\", \"foto_pro\": \"prueba2.jpg\"}', '{\"id_producto\": 2, \"nombre\": \"prueba2\", \"descripcion\": \"ropa de prueba de muestra pe\", \"precio\": 50, \"stock\": 10, \"categoria\": \"baggy la ropa \", \"calificacion\": 4.00, \"estado\": \"activo\", \"foto_pro\": \"prueba2.jpg\"}'),
+(4, 'usuarios', 'INSERT', '2026-11-16', 'root@localhost', '7', 'AFTER', NULL, '{\"id_usuario\": 7, \"nombre\": \"prueba\", \"apellido\": \"insert\", \"email\": \"andrelex6024@gmail.com\", \"password_hash\": \"$2y$10$e9reZUpGwG.xAArRIwm3tOprtC7RUK8gxDqY8Ed2QjFVXXtQ97s5.\", \"telefono\": null, \"rol\": \"cliente\", \"foto_perfil\": \"default_user.jpg\", \"creado_en\": \"2026-11-16 09:38:16\"}'),
+(5, 'usuarios', 'DELETE', '2026-11-16', 'root@localhost', '5', 'AFTER', '{\"id_usuario\": 5, \"nombre\": \"andreelex\", \"apellido\": \"flores\", \"email\": \"prueba3@gmail.com\", \"telefono\": null, \"rol\": \"admin\", \"foto_perfil\": \"default_user.jpg\", \"creado_en\": \"2026-11-07 19:16:09\"}', NULL),
+(6, 'productos', 'UPDATE', '2026-11-16', 'root@localhost', '8', 'AFTER', '{\"id_producto\": 8, \"nombre\": \"Hoodie Street Classic\", \"descripcion\": \"Polerón oversize de algodón friso premium\", \"precio\": 180, \"stock\": 15, \"categoria\": \"hoodies\", \"calificacion\": 5.00, \"estado\": \"activo\", \"foto_pro\": \"hoodie_classic.jpg\"}', '{\"id_producto\": 8, \"nombre\": \"Hoodie Street Classic\", \"descripcion\": \"Polerón oversize de algodón friso premium\", \"precio\": 180, \"stock\": 15, \"categoria\": \"hoodies\", \"calificacion\": 5.00, \"estado\": \"activo\", \"foto_pro\": \"prueba3.jpg\"}'),
+(7, 'usuarios', 'INSERT', '2026-11-18', 'root@localhost', '8', 'AFTER', NULL, '{\"id_usuario\": 8, \"nombre\": \"subastador\", \"apellido\": \"elsubastador\", \"email\": \"subastador@gmail.com\", \"password_hash\": \"$2y$10$ZjWi4n7Zbax19B9Gpi1v7uARCA7EaEZrxSjF4nHf8ItsgFxPqo8lu\", \"telefono\": null, \"rol\": \"cliente\", \"foto_perfil\": \"default_user.jpg\", \"creado_en\": \"2026-11-18 07:42:12\"}'),
+(8, 'usuarios', 'UPDATE', '2026-11-18', 'root@localhost', '8', 'AFTER', '{\"id_usuario\": 8, \"nombre\": \"subastador\", \"apellido\": \"elsubastador\", \"email\": \"subastador@gmail.com\", \"telefono\": null, \"rol\": \"cliente\", \"foto_perfil\": \"default_user.jpg\", \"creado_en\": \"2026-11-18 07:42:12\"}', '{\"id_usuario\": 8, \"nombre\": \"subastador\", \"apellido\": \"elsubastador\", \"email\": \"subastador@gmail.com\", \"telefono\": null, \"rol\": \"subastador\", \"foto_perfil\": \"default_user.jpg\", \"creado_en\": \"2026-11-18 07:42:12\"}');
 
 -- --------------------------------------------------------
 
@@ -71,8 +103,127 @@ CREATE TABLE `productos` (
 
 INSERT INTO `productos` (`id_producto`, `nombre`, `descripcion`, `precio`, `stock`, `categoria`, `calificacion`, `estado`, `foto_pro`) VALUES
 (1, 'prueba1', '', 100, 10, 'prueba', 5.00, 'activo', 'prueba1.jpg'),
-(2, 'prueba2', '', 50, 5, 'baggy', 3.00, 'activo', 'prueba2.jpg'),
-(3, 'prueba3', '', 30, 2, 'baggy', 5.00, 'activo', 'prueba3.jpg');
+(2, 'prueba2', 'ropa de prueba de muestra pe', 50, 10, 'baggy la ropa ', 4.00, 'activo', 'prueba2.jpg'),
+(8, 'Hoodie Street Classic', 'Polerón oversize de algodón friso premium', 180, 15, 'hoodies', 5.00, 'activo', 'prueba3.jpg');
+
+--
+-- Disparadores `productos`
+--
+DELIMITER $$
+CREATE TRIGGER `insert_producto` AFTER INSERT ON `productos` FOR EACH ROW BEGIN 
+    INSERT INTO auditoria (
+        nombre_tabla,
+        operacion,
+        fecha_operacion,
+        usuario_bd,
+        clave_registro,
+        momento,
+        datos_anteriores,
+        datos_nuevos
+    )
+    VALUES (
+        'productos',
+        'INSERT',
+        NOW(),
+        USER(),
+        NEW.id_producto, 
+        'AFTER',
+        NULL,
+        JSON_OBJECT(
+            'id_producto', NEW.id_producto,
+            'nombre', NEW.nombre,
+            'descripcion', NEW.descripcion,
+            'precio', NEW.precio,
+            'stock', NEW.stock,
+            'categoria', NEW.categoria,
+            'calificacion', NEW.calificacion,
+            'estado', NEW.estado,
+            'foto_pro', NEW.foto_pro
+        )
+    );
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `productos_delete` BEFORE DELETE ON `productos` FOR EACH ROW BEGIN 
+    INSERT INTO auditoria (
+        nombre_tabla,
+        operacion,
+        fecha_operacion,
+        usuario_bd,
+        clave_registro,
+        momento,
+        datos_anteriores,
+        datos_nuevos
+    )
+    VALUES (
+        'productos',
+        'DELETE',
+        NOW(),
+        USER(),
+        OLD.id_producto,
+        'BEFORE',
+        JSON_OBJECT(
+            'id_producto', OLD.id_producto,
+            'nombre', OLD.nombre,
+            'descripcion', OLD.descripcion,
+            'precio', OLD.precio,
+            'stock', OLD.stock,
+            'categoria', OLD.categoria,
+            'calificacion', OLD.calificacion,
+            'estado', OLD.estado,
+            'foto_pro', OLD.foto_pro
+        ),
+        NULL 
+    );
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `update_producto` AFTER UPDATE ON `productos` FOR EACH ROW BEGIN 
+    INSERT INTO auditoria (
+        nombre_tabla,
+        operacion,
+        fecha_operacion,
+        usuario_bd,
+        clave_registro,
+        momento,
+        datos_anteriores,
+        datos_nuevos
+    )
+    VALUES (
+        'productos',
+        'UPDATE',
+        NOW(),
+        USER(),
+        NEW.id_producto, 
+        'AFTER',
+          JSON_OBJECT(
+            'id_producto', OLD.id_producto,
+            'nombre', OLD.nombre,
+            'descripcion', OLD.descripcion,
+            'precio', OLD.precio,
+            'stock', OLD.stock,
+            'categoria',OLD.categoria,
+            'calificacion',OLD.calificacion,
+            'estado', OLD.estado,
+            'foto_pro', OLD.foto_pro
+        ),
+        JSON_OBJECT(
+            'id_producto', NEW.id_producto,
+            'nombre', NEW.nombre,
+            'descripcion', NEW.descripcion,
+            'precio', NEW.precio,
+            'stock', NEW.stock,
+            'categoria', NEW.categoria,
+            'calificacion', NEW.calificacion,
+            'estado', NEW.estado,
+            'foto_pro', NEW.foto_pro
+        )
+    );
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -174,6 +325,7 @@ CREATE TABLE `usuarios` (
   `password_hash` varchar(255) NOT NULL,
   `telefono` varchar(20) DEFAULT NULL,
   `rol` enum('cliente','admin','asesor','subastador') DEFAULT 'cliente',
+  `foto_perfil` varchar(250) NOT NULL DEFAULT 'default_user.jpg',
   `creado_en` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -181,11 +333,128 @@ CREATE TABLE `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellido`, `email`, `password_hash`, `telefono`, `rol`, `creado_en`) VALUES
-(3, 'andres', 'flores', 'andrelex602@gmail.com', '$2y$10$7SHK3sV.SizGCKsdVasCk.Wa4g7JHaeHeUU/0BUb9jmRt9YVnwMri', NULL, 'cliente', '2026-11-07 03:43:37'),
-(4, 'admin', 'istrador', 'andre@baggy.com', '2380784', '45456432', 'admin', '2026-11-07 21:59:54'),
-(5, 'andreelex', 'flores', 'prueba3@gmail.com', '$2y$10$0.kfB5o8xpwTYV.vQE4OQ.0FHumGZcTiH33ZrnMWz1tfvX3rHYR5S', NULL, 'admin', '2026-11-07 23:16:09'),
-(6, 'baagy', 'elbaggy', 'baggycliente@gmai.com', '$2y$10$sLqOfTd2hOqt..P0oXGmA.HPB4lJCbD2wdMnE4BHU5u0uwntojCr.', '78842399', 'cliente', '2026-11-09 15:50:46');
+INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellido`, `email`, `password_hash`, `telefono`, `rol`, `foto_perfil`, `creado_en`) VALUES
+(3, 'andres', 'flores', 'andrelex602@gmail.com', '$2y$10$7SHK3sV.SizGCKsdVasCk.Wa4g7JHaeHeUU/0BUb9jmRt9YVnwMri', NULL, 'cliente', 'default_user.jpg', '2026-11-07 03:43:37'),
+(4, 'admin', 'istradorpro', 'andre@baggy.com', '$2y$10$PTnNr7sd8QgBef7ovDQqGuJtlBiJ98d5MyBZr7Y3Qf6aenkxUvjDu', '45456432', 'admin', 'default_user.jpg', '2026-11-07 21:59:54'),
+(6, 'baagy', 'elbaggy', 'baggycliente@gmai.com', '$2y$10$sLqOfTd2hOqt..P0oXGmA.HPB4lJCbD2wdMnE4BHU5u0uwntojCr.', '78842399', 'cliente', 'user_6_1794447693.jpg', '2026-11-09 15:50:46'),
+(7, 'prueba', 'insert', 'andrelex6024@gmail.com', '$2y$10$e9reZUpGwG.xAArRIwm3tOprtC7RUK8gxDqY8Ed2QjFVXXtQ97s5.', NULL, 'cliente', 'default_user.jpg', '2026-11-16 13:38:16'),
+(8, 'subastador', 'elsubastador', 'subastador@gmail.com', '$2y$10$ZjWi4n7Zbax19B9Gpi1v7uARCA7EaEZrxSjF4nHf8ItsgFxPqo8lu', NULL, 'subastador', 'default_user.jpg', '2026-11-18 11:42:12');
+
+--
+-- Disparadores `usuarios`
+--
+DELIMITER $$
+CREATE TRIGGER `delete_usuario` AFTER DELETE ON `usuarios` FOR EACH ROW BEGIN
+    INSERT INTO auditoria (
+        nombre_tabla,
+        operacion,
+        fecha_operacion,
+        usuario_bd,
+        clave_registro,
+        momento,
+        datos_anteriores,
+        datos_nuevos
+    )
+    VALUES (
+        'usuarios',
+        'DELETE',
+        NOW(),
+        USER(),
+        OLD.id_usuario,
+        'AFTER',
+        JSON_OBJECT(
+            'id_usuario', OLD.id_usuario,
+            'nombre', OLD.nombre,
+            'apellido', OLD.apellido,
+            'email', OLD.email,
+            'telefono', OLD.telefono,
+            'rol', OLD.rol,
+            'foto_perfil', OLD.foto_perfil,
+            'creado_en', OLD.creado_en
+        ),
+        NULL
+    );
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `insert_usuarios` AFTER INSERT ON `usuarios` FOR EACH ROW BEGIN 
+    INSERT INTO auditoria (
+        nombre_tabla,
+        operacion,
+        fecha_operacion,
+        usuario_bd,
+        clave_registro,
+        momento,
+        datos_anteriores,
+        datos_nuevos
+    )
+    VALUES (
+        'usuarios',
+        'INSERT',
+        NOW(),
+        USER(),
+        NEW.id_usuario, 
+        'AFTER',
+        NULL,
+        JSON_OBJECT(
+            'id_usuario', NEW.id_usuario,
+            'nombre', NEW.nombre,
+            'apellido', NEW.apellido,
+            'email', NEW.email,
+            'password_hash', NEW.password_hash,
+            'telefono', NEW.telefono,
+            'rol', NEW.rol,
+            'foto_perfil', NEW.foto_perfil,
+            'creado_en', NEW.creado_en
+        )
+    );
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `update_usuario` AFTER UPDATE ON `usuarios` FOR EACH ROW BEGIN
+    INSERT INTO auditoria (
+        nombre_tabla,
+        operacion,
+        fecha_operacion,
+        usuario_bd,
+        clave_registro,
+        momento,
+        datos_anteriores,
+        datos_nuevos
+    )
+    VALUES (
+        'usuarios',
+        'UPDATE',
+        NOW(),
+        USER(),
+        NEW.id_usuario,
+        'AFTER',
+        JSON_OBJECT(
+            'id_usuario', OLD.id_usuario,
+            'nombre', OLD.nombre,
+            'apellido', OLD.apellido,
+            'email', OLD.email,
+            'telefono', OLD.telefono,
+            'rol', OLD.rol,
+            'foto_perfil', OLD.foto_perfil,
+            'creado_en', OLD.creado_en
+        ),
+        JSON_OBJECT(
+            'id_usuario', NEW.id_usuario,
+            'nombre', NEW.nombre,
+            'apellido', NEW.apellido,
+            'email', NEW.email,
+            'telefono', NEW.telefono,
+            'rol', NEW.rol,
+            'foto_perfil', NEW.foto_perfil,
+            'creado_en', NEW.creado_en
+        )
+    );
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -215,6 +484,12 @@ INSERT INTO `variantes_producto` (`id_variante`, `id_producto`, `talla`, `color`
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `auditoria`
+--
+ALTER TABLE `auditoria`
+  ADD PRIMARY KEY (`id_auditoria`);
 
 --
 -- Indices de la tabla `auditoria_subastas`
@@ -263,6 +538,12 @@ ALTER TABLE `variantes_producto`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `auditoria`
+--
+ALTER TABLE `auditoria`
+  MODIFY `id_auditoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT de la tabla `auditoria_subastas`
 --
 ALTER TABLE `auditoria_subastas`
@@ -272,7 +553,7 @@ ALTER TABLE `auditoria_subastas`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id_producto` int(240) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_producto` int(240) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `pujas`
@@ -290,7 +571,7 @@ ALTER TABLE `subastas`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `variantes_producto`

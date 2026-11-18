@@ -77,9 +77,7 @@ class subasta{
                 return ['success' => false, 'mensaje' => "El monto mínimo permitido es de Bs. " . number_format($minimoRequerido, 2)];
             }
 
-            // insertar pujas trigers
-            // 1. 'actualizar_subasta_tras_puja' -> actualiza precio_actual e id_ganador en 'subastas'.
-            // 2. 'auditoria_subasta_precio' -> registra el cambio en 'auditoria_subastas'.
+            
             $sqlInsert = "INSERT INTO pujas (id_subasta, id_usuario, monto) 
                           VALUES (:id_subasta, :id_usuario, :monto)";
             $stmtInsert = $this->pdo->prepare($sqlInsert);
