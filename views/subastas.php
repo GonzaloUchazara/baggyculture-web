@@ -1,4 +1,8 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 require_once __DIR__ . '/../config/conexion.php';
 require_once __DIR__ . '/../models/Subasta.php';
 $modeloSubasta = new subasta($pdo);

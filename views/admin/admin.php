@@ -6,8 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-    <br>faaw
-    fkabkwbkwa
-    <h>fnafjwjfnjanfwa</h>
+    <h1>aun no se creo admin.php a inplementar redireccion funciona correctamente <h1>
 </body>
 </html>

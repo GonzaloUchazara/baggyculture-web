@@ -1,4 +1,8 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 require_once __DIR__ . '/../config/conexion.php';
 
 $busqueda = isset($_GET['q']) ? trim($_GET['q']) : '';
@@ -23,6 +27,7 @@ $productos = $stmt->fetchAll();
     <link rel="stylesheet" href="../assets/css/navbar.css">
     <link rel="stylesheet" href="../assets/css/login.css">
     <link rel="stylesheet" href="../assets/css/catalogo.css">
+    
 </head>
 <body>
 

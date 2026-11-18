@@ -10,7 +10,7 @@ body {
   color: #111;
   display: flex;
   justify-content: center;
-  padding: 40px 20px;
+  padding: 0 0px;
 }
 
 .product-detail-container {

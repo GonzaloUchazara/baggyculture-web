@@ -29,7 +29,7 @@ function initLoginModal() {
         setTimeout(() => {
             if (!modal.classList.contains('active')) {
                 modal.classList.add('hidden');
-                // Al cerrar el modal, restaurar vista al frente (login)
+                
                 if (cardFlip) {
                     cardFlip.classList.remove('flipped');
                 }
@@ -69,26 +69,81 @@ function initLoginModal() {
         };
     }
 
-    // cierre modal oscurozzz
+    // cierre modal oscuro
     modal.onclick = (e) => {
         if (e.target === modal) {
             closeModal();
         }
     };
 
-    // el escp
+    // escape para cerrar
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && modal.classList.contains('active')) {
             closeModal();
         }
     });
 
-    // Envío del formulario de Login elimanao
-     //if (formLogin) {
-       // formLogin.addEventListener('submit', (e) => {
-         //   e.preventDefault();
-        //});
-    //}
+    // Envío del formulario de Login con AJAX
+    if (formLogin) {
+        formLogin.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            let feedback = document.getElementById('loginFeedback');
+            if (!feedback) {
+                feedback = document.createElement('div');
+                feedback.id = 'loginFeedback';
+                feedback.style.fontSize = '0.85em';
+                feedback.style.textAlign = 'center';
+                feedback.style.marginTop = '8px';
+                formLogin.appendChild(feedback);
+            }
+
+            feedback.style.display = 'block';
+            feedback.style.color = '#38bdf8';
+            feedback.textContent = 'Verificando credenciales...';
+
+            const submitBtn = formLogin.querySelector('button[type="submit"]');
+            if (submitBtn) submitBtn.disabled = true;
+
+            const formData = new FormData(formLogin);
+            formData.append('ajax', '1');
+
+            // Determinar la ruta correcta al controlador sin importar la página actual
+            let controllerUrl = '../controllers/controlador.php?accion=login';
+            const match = window.location.pathname.match(/^(.*?\/baggy_culture)\//i);
+            if (match) {
+                controllerUrl = match[1] + '/controllers/controlador.php?accion=login';
+            }
+
+            try {
+                const response = await fetch(controllerUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json'
+                    },
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    feedback.style.color = '#4ade80';
+                    feedback.textContent = data.message;
+                    setTimeout(() => {
+                        window.location.href = data.redirect || '../views/catalogo.php';
+                    }, 600);
+                } else {
+                    feedback.style.color = '#f87171';
+                    feedback.textContent = data.message || 'Error al iniciar sesión.';
+                    if (submitBtn) submitBtn.disabled = false;
+                }
+            } catch (error) {
+                console.error('Error en el login AJAX, reintentando tradicional:', error);
+                // Si la respuesta no es JSON o falla fetch, enviar tradicionalmente
+                formLogin.submit();
+            }
+        });
+    }
 
     // Envío del formulario de Registro
     if (formRegister) {
@@ -115,6 +170,7 @@ function initLoginModal() {
             const formData = new FormData(formRegister);
 
             // Determinar la ruta correcta al controlador sin importar la página
+            
             let controllerUrl = '../controllers/controlador.php?accion=registrar';
             const match = window.location.pathname.match(/^(.*?\/baggy_culture)\//i);
             if (match) {
@@ -124,6 +180,9 @@ function initLoginModal() {
             try {
                 const response = await fetch(controllerUrl, {
                     method: 'POST',
+                    headers: {
+                        'Accept': 'application/json'
+                    },
                     body: formData
                 });
 

@@ -30,12 +30,30 @@ $current_page = basename($_SERVER['PHP_SELF']);
             </div>
 
             <!-- perfil -->
-            <button type="button" class="icon-btn" id="btnOpenLogin" aria-label="Iniciar Sesión" title="Iniciar Sesión">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-            </button>
+            <?php if (isset($_SESSION['id_usuario'])): ?>
+                <!-- usuario ya logueado -->
+                <a href="../views/perfil.php" class="profile-link" title="Mi perfil (<?php echo htmlspecialchars($_SESSION['nombre'] ?? ''); ?>)">
+                    <?php
+                    $foto = !empty($_SESSION['foto_perfil']) ? basename($_SESSION['foto_perfil']) : 'default_user.jpg';
+                    $ruta_avatar = "../public/uploads/perfil/" . htmlspecialchars($foto);
+                    ?>
+                    <img src="<?php echo $ruta_avatar; ?>" alt="foto perfil" class="nav-avatar">
+                </a>
+                <a href="../controllers/controlador.php?accion=logout" class="icon-btn" title="Cerrar sesión" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none; color: inherit;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                </a>
+            <?php else : ?>
+                <button type="button" class="icon-btn" id="btnOpenLogin" aria-label="Iniciar Sesión" title="Iniciar Sesión">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </button>
+            <?php endif; ?>
 
             <!-- carrito -->
             <button type="button" class="icon-btn" aria-label="Carrito">
@@ -48,10 +66,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
         </div>
     </nav>
 
-
-
-    <!-- login oculto que aparece -->
-     <!-- Modal Flotante (oculto por defecto) -->
+    <!-- Modal Flotante (oculto por defecto) -->
     <div id="modalLogin" class="modal-overlay hidden">
         <div class="modal-wrapper">
             <button type="button" class="modal-close" id="btnCloseModal" aria-label="Cerrar">&times;</button>
@@ -62,7 +77,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <div class="card-face card-front" id="cardFront">
                     <div class="card_lo">
                         <div class="card2">
-                            <form action="../controllers/controlador.php?accion=login" method="POST"class="form" id="formLogin" >
+                            <form action="../controllers/controlador.php?accion=login" method="POST" class="form" id="formLogin">
                                 <p class="form-heading">Iniciar Sesión</p>
 
                                 <div class="field">
@@ -161,13 +176,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
         </div>
     </div>
 
-
-    
-
-
-
-
-
     <!-- Toast de Éxito -->
     <?php if (isset($_SESSION['login_exito'])): ?>
         <div id="toastSuccess" style="
@@ -238,5 +246,3 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
     <script src="../assets/js/login.js"></script>
 </header>
-
-

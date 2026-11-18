@@ -53,8 +53,10 @@ if (empty($fotos_galeria) && !empty($producto['foto_pro'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($producto['nombre']) ?></title>
     <link rel="stylesheet" href="../assets/css/detalle.css">
+    <link rel="stylesheet" href="../assets/css/navbar.css">
 </head>
 <body>
+  
     <main class="product-detail-container">
 
         <section class="gallery-col">

@@ -67,7 +67,7 @@ if (badgeReloj) {
     }
 }
 
-// Envío de puja por AJAX
+
 async function enviarPuja(e) {
     e.preventDefault();
     const form = e.target;
