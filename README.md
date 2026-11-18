@@ -65,9 +65,13 @@ baggyculture/
 ---
 
 ## Equipo
+| Nombre Completo              | Rol / Módulo Asignado                        |  Usuario GitHub                                                                           |
 
-| Nombre Completo              | Rol / Módulo Asignado                        | Usuario GitHub                                                                           |
-| **Gerald Vidal Colque Luna** | Lógica y Validaciones de Registro de Usuario | [@estgeraldvidalcolquelu-oss](https://github.com/estgeraldvidalcolquelu-oss)             |
-| **Gonzalo Uchazara Acarapi** | Gestión de Catálogo y Productos              | [@GonzaloUchazara](https://github.com/GonzaloUchazara)                                   |
-| **Andrés Fernando Flores**   | Módulo de Subastas y Base de Datos           | [@estandresfernandofloresmo-create](https://github.com/estandresfernandofloresmo-create) |
-| **Juan Antonio Moya**        | Módulo de Asesores y Vistas                  | [@estjuanantoniomoyaob-web](https://github.com/estjuanantoniomoyaob-web)                 |
+| **Gerald Vidal Colque Luna** | Lógica y Validaciones de Registro de Usuario |  [@estgeraldvidalcolquelu-oss](https://github.com/estgeraldvidalcolquelu-oss)             |
+
+| **Gonzalo Uchazara Acarapi** | Gestión de Catálogo y Productos              |  [@GonzaloUchazara](https://github.com/GonzaloUchazara)                                   |
+
+| **Andrés Fernando Flores**   | Módulo de Subastas y Base de Datos           |  [@estandresfernandofloresmo-create](https://github.com/estandresfernandofloresmo-create) |
+
+| **Juan Antonio Moya**        | Módulo de Asesores y Vistas                  |  [@estjuanantoniomoyaob-web](https://github.com/estjuanantoniomoyaob-web)                 |
+
