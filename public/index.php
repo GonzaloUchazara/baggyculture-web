@@ -110,59 +110,54 @@ if (session_status() === PHP_SESSION_NONE) {
   </div>
 </section>
 
-<!-- Categorías Destacadas -->
-
 <section class="categories-section">
   <div class="categories-header">
     <div class="categories-title-box">
       <h2>Categorías Destacadas</h2>
       <p>Explora nuestras selecciones diseñadas para cada estilo.</p>
     </div>
-    <a href="#" class="view-all-link">Ver todo el catálogo &rarr;</a>
+    <a href="../views/catalogo.php" class="view-all-link">Ver todo el catálogo →</a>
   </div>
 
   <div class="categories-grid">
 
-
     <!-- Tarjeta 1: Mujer -->
-    <a href="#" class="category-card">
+    <a href="../views/catalogo.php?q=Mujer" class="category-card">
       <img src="../assets/img/mujer.jpg" alt="Colección Mujer">
       <div class="category-info">
         <span class="category-tag">COLECCIÓN</span>
         <h3 class="category-name">Mujer</h3>
-        <span class="category-cta">COMPRAR AHORA &gt;</span>
+        <span class="category-cta">COMPRAR AHORA ></span>
       </div>
     </a>
 
     <!-- Tarjeta 2: Hombre -->
-    <a href="#" class="category-card">
+    <a href="../views/catalogo.php?q=Hombre" class="category-card">
       <img src="../assets/img/hombre.jpg" alt="Colección Hombre">
       <div class="category-info">
         <span class="category-tag">COLECCIÓN</span>
         <h3 class="category-name">Hombre</h3>
-        <span class="category-cta">COMPRAR AHORA &gt;</span>
+        <span class="category-cta">COMPRAR AHORA ></span>
       </div>
     </a>
 
-
-    <!--tarjeta 3 accesorios -->
-    <a href="#" class="category-card">
+    <!-- Tarjeta 3: Accesorios -->
+    <a href="../views/catalogo.php?q=Accesorios" class="category-card">
       <img src="../assets/img/accesorios.jpg" alt="Accesorios">
       <div class="category-info">
         <span class="category-tag">ESENCIALES</span>
         <h3 class="category-name">Accesorios</h3>
-        <span class="category-cta">COMPRAR AHORA &gt;</span>
+        <span class="category-cta">COMPRAR AHORA ></span>
       </div>
     </a>
 
-
-    <!--accesorios -->
-    <a href="#" class="category-card">
+    <!-- Tarjeta 4: Urban & Luxury -->
+    <a href="../views/catalogo.php?q=Calzado" class="category-card">
       <img src="../assets/img/zapatos.jpg" alt="Urban & Luxury">
       <div class="category-info">
         <span class="category-tag">CALZADO</span>
-        <h3 class="category-name">Urban &amp; Luxury</h3>
-        <span class="category-cta">COMPRAR AHORA &gt;</span>
+        <h3 class="category-name">Urban & Luxury</h3>
+        <span class="category-cta">COMPRAR AHORA ></span>
       </div>
     </a>
   </div>
