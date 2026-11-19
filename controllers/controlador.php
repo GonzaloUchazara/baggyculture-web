@@ -300,7 +300,7 @@ class Controlador {
             $cambios['nombre'] = $nombre;
         }
 
-        /
+        
         $apellidoOrig = $usuario['apellido'] ?? '';
         if ($apellido !== null && $apellido !== '' && $apellido !== $apellidoOrig) {
             $cambios['apellido'] = $apellido;

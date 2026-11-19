@@ -56,14 +56,15 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <?php endif; ?>
 
             <!-- carrito -->
-            <button type="button" class="icon-btn" aria-label="Carrito">
+            <a href="" class="icon-btn" aria-label="Carrito">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
                     <line x1="3" y1="6" x2="21" y2="6"></line>
                     <path d="M16 10a4 4 0 0 1-8 0"></path>
                 </svg>
-            </button>
+            </a>
         </div>
+       
     </nav>
 
     <!-- Modal Flotante (oculto por defecto) -->
