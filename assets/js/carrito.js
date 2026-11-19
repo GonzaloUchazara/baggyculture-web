@@ -7,25 +7,42 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
 
             const submitBtn = formDetalle.querySelector('.btn-add-cart');
-            const originalText = submitBtn.textContent;
+            const originalText = submitBtn ? submitBtn.textContent : 'Añadir al carrito';
 
-            
             const formData = new FormData(formDetalle);
             
-            
-            if (!formData.get('talla') || !formData.get('color')) {
-                alert('Por favor selecciona una talla y un color.');
+            const hasColor = !!formDetalle.querySelector('input[name="color"]');
+            const hasTalla = !!formDetalle.querySelector('input[name="talla"]');
+
+            if (hasColor && !formData.get('color')) {
+                alert('Por favor selecciona un color.');
                 return;
             }
 
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Añadiendo...';
+            if (hasTalla && !formData.get('talla')) {
+                alert('Por favor selecciona una talla.');
+                return;
+            }
+
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Añadiendo...';
+            }
 
             try {
-                const response = await fetch('agregar_carrito.php', {
+                const actionUrl = formDetalle.getAttribute('action') || 'agregar-carrito.php';
+
+                const response = await fetch(actionUrl, {
                     method: 'POST',
-                    body: formData
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
                 });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
 
                 const data = await response.json();
 
@@ -36,23 +53,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 if (data.status === 'success') {
-                    
                     actualizarContadorNavbar(data.total_items);
-                    submitBtn.textContent = '¡Añadido!';
+                    if (submitBtn) {
+                        submitBtn.textContent = '¡Añadido al carrito!';
+                    }
                     setTimeout(() => {
-                        submitBtn.textContent = originalText;
-                        submitBtn.disabled = false;
-                    }, 1500);
+                        window.location.href = 'carrito.php';
+                    }, 600);
                 } else {
                     alert(data.message || 'Error al agregar el producto');
+                    if (submitBtn) {
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                    }
+                }
+            } catch (error) {
+                console.error('Error al agregar al carrito:', error);
+                alert('Ocurrió un error al procesar la solicitud.');
+                if (submitBtn) {
                     submitBtn.textContent = originalText;
                     submitBtn.disabled = false;
                 }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Ocurrió un error al procesar la solicitud.');
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
             }
         });
     }
@@ -65,4 +86,14 @@ document.addEventListener('DOMContentLoaded', () => {
             cartBadge.style.display = total > 0 ? 'inline-block' : 'none';
         }
     }
+    
+    document.querySelectorAll('.btn-add').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const idProducto = btn.dataset.id;
+        if (idProducto) {
+            window.location.href = `detalles.php?id_producto=${idProducto}`;
+        }
+    });
+});
 });

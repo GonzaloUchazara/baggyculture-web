@@ -1,0 +1,199 @@
+.success-container {
+    max-width: 720px;
+    margin: 40px auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #1f2937;
+}
+
+.success-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 35px 30px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+}
+
+.check-icon-wrap {
+    width: 64px;
+    height: 64px;
+    background: #ecfdf5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px auto;
+}
+
+.success-card h1 {
+    font-size: 1.6rem;
+    margin: 0 0 6px 0;
+    color: #111827;
+}
+
+.order-code {
+    font-size: 1.05rem;
+    color: #4b5563;
+    margin: 0 0 10px 0;
+}
+
+.badge-status {
+    display: inline-block;
+    background: #fef3c7;
+    color: #92400e;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    letter-spacing: 0.5px;
+    margin-bottom: 25px;
+}
+
+/* Caja de pago QR */
+.qr-payment-box {
+    background: #f9fafb;
+    border: 1px dashed #d1d5db;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.qr-payment-box h3 {
+    margin: 0 0 6px 0;
+    font-size: 1.1rem;
+}
+
+.qr-payment-box p {
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin: 0 0 15px 0;
+}
+
+.qr-placeholder img {
+    width: 170px;
+    height: 170px;
+    border-radius: 8px;
+    background: #fff;
+    padding: 6px;
+    border: 1px solid #e5e7eb;
+}
+
+.qr-payment-box small {
+    display: block;
+    margin-top: 10px;
+    color: #9ca3af;
+    font-size: 0.8rem;
+}
+
+/* Info Grid */
+.order-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    text-align: left;
+    background: #f9fafb;
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+
+.info-block h4 {
+    margin: 0 0 4px 0;
+    font-size: 0.85rem;
+    color: #6b7280;
+    text-transform: uppercase;
+}
+
+.info-block p {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #111827;
+}
+
+/* Desglose de prendas */
+.order-breakdown {
+    text-align: left;
+    border-top: 1px solid #f3f4f6;
+    padding-top: 20px;
+}
+
+.order-breakdown h4 {
+    margin: 0 0 15px 0;
+    font-size: 1rem;
+}
+
+.breakdown-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.breakdown-item {
+    display: grid;
+    grid-template-columns: 50px 1fr auto;
+    gap: 12px;
+    align-items: center;
+}
+
+.breakdown-item img {
+    width: 50px;
+    height: 55px;
+    object-fit: cover;
+    border-radius: 6px;
+    background: #f3f4f6;
+}
+
+.breakdown-details {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.85rem;
+}
+
+.breakdown-details strong {
+    color: #111827;
+    margin-bottom: 2px;
+}
+
+.breakdown-details span {
+    color: #6b7280;
+}
+
+.breakdown-total {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.grand-total-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 2px solid #f3f4f6;
+    font-size: 1.1rem;
+}
+
+.grand-total-row strong {
+    color: #111827;
+}
+
+.action-buttons {
+    margin-top: 30px;
+}
+
+.btn-back-home {
+    display: inline-block;
+    background: #111827;
+    color: #fff;
+    padding: 12px 28px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background 0.2s ease;
+}
+
+.btn-back-home:hover {
+    background: #000;
+}

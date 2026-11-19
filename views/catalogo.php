@@ -138,5 +138,6 @@ $productos = $stmt->fetchAll();
     <?php endif; ?>
 </div>
 
+    <script src="../assets/js/carrito.js"></script>
 </body>
 </html>

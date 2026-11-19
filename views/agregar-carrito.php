@@ -29,11 +29,14 @@ if ($id_producto <= 0 || empty($color) || empty($talla)) {
 $id_usuario = (int)$_SESSION['id_usuario'];
 
 try {
-    
+    // Buscar la variante y el stock disponible (el stock reside en la tabla productos)
     $stmtVar = $pdo->prepare("
-        SELECT id_variante, stock 
-        FROM variantes_producto 
-        WHERE id_producto = :id_pro AND talla = :talla AND color = :color 
+        SELECT vp.id_variante, p.stock 
+        FROM variantes_producto vp
+        INNER JOIN productos p ON vp.id_producto = p.id_producto
+        WHERE vp.id_producto = :id_pro 
+          AND TRIM(vp.talla) = :talla 
+          AND TRIM(vp.color) = :color 
         LIMIT 1
     ");
     $stmtVar->execute([
@@ -44,17 +47,37 @@ try {
     $variante = $stmtVar->fetch(PDO::FETCH_ASSOC);
 
     if (!$variante) {
+        // Búsqueda flexible por si no coinciden mayúsculas/minúsculas
+        $stmtVarFlex = $pdo->prepare("
+            SELECT vp.id_variante, p.stock 
+            FROM variantes_producto vp
+            INNER JOIN productos p ON vp.id_producto = p.id_producto
+            WHERE vp.id_producto = :id_pro 
+              AND LOWER(TRIM(vp.talla)) = LOWER(:talla) 
+              AND LOWER(TRIM(vp.color)) = LOWER(:color) 
+            LIMIT 1
+        ");
+        $stmtVarFlex->execute([
+            ':id_pro' => $id_producto,
+            ':talla'  => $talla,
+            ':color'  => $color
+        ]);
+        $variante = $stmtVarFlex->fetch(PDO::FETCH_ASSOC);
+    }
+
+    if (!$variante) {
         echo json_encode([
             'status' => 'error',
-            'message' => 'La combinación de talla y color seleccionada no existe'
+            'message' => 'La combinación de talla y color seleccionada no está disponible'
         ]);
         exit;
     }
 
-    if ($variante['stock'] < $cantidad) {
+    $stockDisponible = (int)$variante['stock'];
+    if ($stockDisponible < $cantidad) {
         echo json_encode([
             'status' => 'error',
-            'message' => 'No hay stock disponible para esta variante'
+            'message' => 'No hay stock disponible para este producto'
         ]);
         exit;
     }

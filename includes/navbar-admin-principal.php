@@ -1,12 +1,23 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
+    require_once __DIR__ . '/auth-guard.php';
 }
 
 $base_path = (strpos($_SERVER['PHP_SELF'] ?? '', '/admin/') !== false) ? '../../' : '../';
 $current_page = basename($_SERVER['PHP_SELF'] ?? '');
 ?>
 <link rel="stylesheet" href="<?= $base_path ?>assets/css/navbar-admin-principal.css">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
 
 <header class="admin-header">
     <nav class="admin-navbar">
@@ -27,16 +38,16 @@ $current_page = basename($_SERVER['PHP_SELF'] ?? '');
                     <a href="admin.php" class="nav-link <?= ($current_page === 'admin.php' || $current_page === 'dashboard.php') ? 'active' : '' ?>">Principal Dashboard</a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link <?= ($current_page === 'productos.php') ? 'active' : '' ?>">Gestión de Productos</a>
+                    <a href="../admin/gestion-productos.php" class="nav-link <?= ($current_page === 'productos.php') ? 'active' : '' ?>">Gestión de Productos</a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link <?= ($current_page === 'pedidos.php' || $current_page === 'ventas.php') ? 'active' : '' ?>">Pedidos y Ventas</a>
+                    <a href="../admin/pedidos-ventas.php" class="nav-link <?= ($current_page === 'pedidos.php' || $current_page === 'ventas.php') ? 'active' : '' ?>">Pedidos y Ventas</a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link <?= ($current_page === 'usuarios.php') ? 'active' : '' ?>">Usuarios</a>
+                    <a href="../admin/gestion-usuarios.php" class="nav-link <?= ($current_page === 'usuarios.php') ? 'active' : '' ?>">Usuarios</a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link <?= ($current_page === 'auditoria-subastas.php' || $current_page === 'auditoria.php') ? 'active' : '' ?>">Auditoría</a>
+                    <a href="../admin/auditoria-gral.php" class="nav-link <?= ($current_page === 'auditoria-subastas.php' || $current_page === 'auditoria.php') ? 'active' : '' ?>">Auditoría</a>
                 </li>
             </ul>
 
@@ -54,7 +65,8 @@ $current_page = basename($_SERVER['PHP_SELF'] ?? '');
         </div>
     </nav>
 </header>
-
+</body>
+</html>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const adminNavToggle = document.getElementById('adminPrincipalNavToggle');

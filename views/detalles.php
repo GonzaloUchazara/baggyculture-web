@@ -1,4 +1,7 @@
 <?php 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require_once '../config/conexion.php';
 $id_producto = isset($_GET['id_producto']) ? (int)$_GET['id_producto'] : 0;
 
@@ -87,7 +90,7 @@ if (empty($fotos_galeria) && !empty($producto['foto_pro'])) {
                 Bs. <?= number_format($producto['precio'], 2) ?>
             </div>
 
-            <form action="agregar_carrito.php" method="POST" class="purchase-form">
+            <form action="agregar-carrito.php" method="POST" class="purchase-form">
                 <input type="hidden" name="id_producto" value="<?= $producto['id_producto'] ?>">
 
                 <!--colores -->
@@ -137,5 +140,7 @@ function cambiarFoto(nuevaRuta) {
   }
 }
 </script>
+
+<script src="../assets/js/carrito.js"></script>
 </body>
 </html>

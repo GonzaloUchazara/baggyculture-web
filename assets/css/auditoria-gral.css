@@ -1,0 +1,538 @@
+/* ==========================================================================
+   Variables y configuración base
+   ========================================================================== */
+:root {
+    --bg-main: #0f1115;
+    --bg-card: #181b21;
+    --bg-card-hover: #21252d;
+    --bg-input: #121418;
+    --border-color: #2a2f3a;
+    --text-primary: #f3f4f6;
+    --text-muted: #9ca3af;
+    --primary: #3b82f6;
+    --primary-hover: #2563eb;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --purple: #8b5cf6;
+    --font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    --radius: 8px;
+    --transition: all 0.2s ease-in-out;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: var(--font-family);
+    line-height: 1.5;
+}
+
+.admin-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+/* ==========================================================================
+   Encabezado del módulo
+   ========================================================================== */
+.module-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.header-titles h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.header-titles p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-top: 0.25rem;
+}
+
+/* ==========================================================================
+   Pestañas de Segmentación de Auditoría
+   ========================================================================== */
+.audit-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.tab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    background: transparent;
+    color: var(--text-muted);
+    border: none;
+    border-bottom: 2px solid transparent;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: var(--transition);
+}
+
+.tab-btn:hover {
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.04);
+}
+
+.tab-btn.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+    background-color: rgba(59, 130, 246, 0.1);
+}
+
+/* ==========================================================================
+   Tarjetas KPI
+   ========================================================================== */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.kpi-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+}
+
+.kpi-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.icon-total {
+    background-color: rgba(59, 130, 246, 0.15);
+    color: var(--primary);
+}
+
+.icon-insert {
+    background-color: rgba(16, 185, 129, 0.15);
+    color: var(--success);
+}
+
+.icon-update {
+    background-color: rgba(245, 158, 11, 0.15);
+    color: var(--warning);
+}
+
+.icon-delete {
+    background-color: rgba(239, 68, 68, 0.15);
+    color: var(--danger);
+}
+
+.kpi-data {
+    display: flex;
+    flex-direction: column;
+}
+
+.kpi-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.kpi-data h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-top: 0.2rem;
+}
+
+/* ==========================================================================
+   Barra de herramientas y filtros
+   ========================================================================== */
+.toolbar-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.search-box {
+    position: relative;
+    flex: 1;
+    min-width: 280px;
+}
+
+.search-box i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+}
+
+.search-box input {
+    width: 100%;
+    padding: 0.65rem 1rem 0.65rem 2.6rem;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    outline: none;
+    transition: var(--transition);
+}
+
+.search-box input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.filter-group {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.form-select {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    color: var(--text-primary);
+    padding: 0.65rem 1rem;
+    font-size: 0.9rem;
+    outline: none;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.form-select:focus {
+    border-color: var(--primary);
+}
+
+/* ==========================================================================
+   Botones
+   ========================================================================== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: var(--radius);
+    cursor: pointer;
+    border: none;
+    transition: var(--transition);
+}
+
+.btn-secondary {
+    background-color: #374151;
+    color: #f3f4f6;
+}
+
+.btn-secondary:hover {
+    background-color: #4b5563;
+}
+
+.btn-light {
+    background-color: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border-color);
+}
+
+.btn-light:hover {
+    background-color: var(--border-color);
+    color: #ffffff;
+}
+
+.btn-action {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.4rem 0.6rem;
+    border-radius: 4px;
+    transition: var(--transition);
+}
+
+.btn-action:hover {
+    color: var(--primary);
+    background-color: var(--border-color);
+}
+
+/* ==========================================================================
+   Tabla de Logs de Auditoría
+   ========================================================================== */
+.table-container {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    overflow-x: auto;
+}
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.custom-table th {
+    background-color: #121418;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.custom-table td {
+    padding: 0.9rem 1rem;
+    font-size: 0.95rem;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+}
+
+.custom-table tbody tr:hover {
+    background-color: var(--bg-card-hover);
+}
+
+/* Badges de Operación SQL */
+.badge-op {
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.badge-op-insert {
+    background-color: rgba(16, 185, 129, 0.15);
+    color: var(--success);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.badge-op-update {
+    background-color: rgba(245, 158, 11, 0.15);
+    color: var(--warning);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.badge-op-delete {
+    background-color: rgba(239, 68, 68, 0.15);
+    color: var(--danger);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Badge de Tabla Afectada */
+.badge-table {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+    font-family: monospace;
+    font-weight: 600;
+    border-radius: 4px;
+    background-color: #121418;
+    color: #93c5fd;
+    border: 1px solid var(--border-color);
+}
+
+/* ==========================================================================
+   Modal Visor de Cambios (Diff Viewer)
+   ========================================================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: var(--transition);
+    z-index: 1000;
+}
+
+.modal-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-card {
+    background-color: var(--bg-card);
+    width: 90%;
+    max-width: 900px;
+    max-height: 90vh;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+    transform: translateY(20px);
+    transition: var(--transition);
+    overflow: hidden;
+}
+
+.modal-overlay.open .modal-card {
+    transform: translateY(0);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.modal-header h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.btn-close {
+    background: none;
+    border: none;
+    font-size: 1.75rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    line-height: 1;
+}
+
+.btn-close:hover {
+    color: #ffffff;
+}
+
+.modal-body {
+    padding: 1.5rem;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+}
+
+/* Contenedor del comparador de dos columnas */
+.diff-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+}
+
+@media (max-width: 768px) {
+    .diff-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.diff-column {
+    background-color: var(--bg-main);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.diff-header {
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.diff-header-old {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #f87171;
+}
+
+.diff-header-new {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: #34d399;
+}
+
+.diff-content {
+    padding: 1rem;
+    font-family: monospace;
+    font-size: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* Fila clave-valor en el diff */
+.diff-entry {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.4rem 0.6rem;
+    background-color: var(--bg-card);
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+}
+
+.diff-entry.changed {
+    border-color: var(--warning);
+    background-color: rgba(245, 158, 11, 0.1);
+}
+
+.diff-key {
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.diff-val {
+    color: #ffffff;
+    word-break: break-all;
+    text-align: right;
+    max-width: 60%;
+}
+
+/* Footer Modal */
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1.25rem 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+/* Utilitarios */
+.text-center { text-align: center; }
+.text-muted { color: var(--text-muted); }
+.py-4 { padding-top: 2rem; padding-bottom: 2rem; }
