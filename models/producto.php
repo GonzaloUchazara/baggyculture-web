@@ -25,7 +25,13 @@ class Producto {
     public function obtenerTodos() {
         $sql = "SELECT * FROM productos ORDER BY id_producto DESC";
         $stmt = $this->pdo->query($sql);
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function obtenerActivos() {
+        $sql = "SELECT * FROM productos WHERE estado = 'activo' ORDER BY nombre ASC";
+        $stmt = $this->pdo->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function eliminar($id_producto) {

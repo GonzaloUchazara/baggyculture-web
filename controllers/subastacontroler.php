@@ -74,7 +74,7 @@ class subastacontroler{
 
 
 
-    // 4. Endpoint AJAX para consultar precio actual y tiempo en vivo
+    
     public function obtenerEstadoVivo() {
         header('Content-Type: application/json');
         $id_subasta = filter_input(INPUT_GET, 'id_subasta', FILTER_VALIDATE_INT);
@@ -102,16 +102,125 @@ class subastacontroler{
         ]);
         exit;
     }
+
+    public function toggleEstado() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id_subasta = filter_input(INPUT_POST, 'id_subasta', FILTER_VALIDATE_INT);
+            $nuevo_estado = $_POST['nuevo_estado'] ?? 'activa';
+
+            if ($id_subasta && in_array($nuevo_estado, ['activa', 'finalizada', 'cancelada'])) {
+                $this->modelo->cambiarEstado($id_subasta, $nuevo_estado);
+            }
+        }
+        header('Location: ../views/admin/subastador.php');
+        exit;
+    }
+
+    public function extenderTiempo() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id_subasta = filter_input(INPUT_POST, 'id_subasta', FILTER_VALIDATE_INT);
+            $minutos_extra = filter_input(INPUT_POST, 'minutos_extra', FILTER_VALIDATE_INT);
+
+            if ($id_subasta && $minutos_extra > 0) {
+                $this->modelo->extenderTiempoMinutos($id_subasta, $minutos_extra);
+            }
+        }
+        header('Location: ../views/admin/subastador.php');
+        exit;
+    }
+
+    public function editarSubasta() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id_subasta = filter_input(INPUT_POST, 'id_subasta', FILTER_VALIDATE_INT);
+            $precio_base = filter_input(INPUT_POST, 'precio_base', FILTER_VALIDATE_FLOAT);
+            $fecha_inicio_raw = $_POST['fecha_inicio'] ?? '';
+            $fecha_fin_raw = $_POST['fecha_fin'] ?? '';
+            $estado = $_POST['estado'] ?? 'activa';
+            $producto_nombre = trim($_POST['producto_nombre'] ?? '');
+
+            if ($id_subasta && $precio_base !== false && !empty($fecha_inicio_raw) && !empty($fecha_fin_raw)) {
+                $fecha_inicio = date('Y-m-d H:i:s', strtotime($fecha_inicio_raw));
+                $fecha_fin = date('Y-m-d H:i:s', strtotime($fecha_fin_raw));
+
+                $this->modelo->actualizarSubastaAdmin($id_subasta, $precio_base, $fecha_inicio, $fecha_fin, $estado, $producto_nombre);
+            }
+        }
+        header('Location: ../views/admin/subastador.php');
+        exit;
+    }
+
+    public function obtenerDatosCategoriasApi() {
+        header('Content-Type: application/json');
+        $datos = $this->modelo->obtenerVentasPorCategoria();
+
+        $categorias = array_column($datos, 'categoria');
+        $totales = array_map('floatval', array_column($datos, 'total_recaudado'));
+        $cantidades = array_map('intval', array_column($datos, 'total_vendidas'));
+
+        echo json_encode([
+            'categorias' => $categorias,
+            'totales'    => $totales,
+            'cantidades' => $cantidades
+        ]);
+        exit;
+    }
+
+
+    public function obtenerTopPostoresApi() {
+        header('Content-Type: application/json');
+        $datos = $this->modelo->obtenerTopPostores(5);
+
+        $nombres = array_column($datos, 'nombre');
+        $ofertas = array_map('intval', array_column($datos, 'total_ofertas'));
+        $volumen = array_map('floatval', array_column($datos, 'volumen_total'));
+
+        echo json_encode([
+            'usuarios' => $nombres,
+            'ofertas'  => $ofertas,
+            'volumen'  => $volumen
+        ]);
+        exit;
+    }
+
+    public function obtenerRitmoPujasApi() {
+        header('Content-Type: application/json');
+        $id_subasta = filter_input(INPUT_GET, 'id_subasta', FILTER_VALIDATE_INT) ?: null;
+        $datos = $this->modelo->obtenerRitmoPujasTiempo($id_subasta);
+
+        $tiempos = array_column($datos, 'punto_tiempo');
+        $montos = array_map('floatval', array_column($datos, 'monto'));
+
+        echo json_encode([
+            'tiempos' => $tiempos,
+            'montos'  => $montos
+        ]);
+        exit;
+    }
 }
 
-// Enrutador directo si se llama directamente al archivo o por query params
-if (isset($_GET['accion'])) {
+
+$accion = $_POST['accion'] ?? $_GET['accion'] ?? null;
+
+if ($accion) {
     $controlador = new subastacontroler();
-    $accion = $_GET['accion'];
 
     if ($accion === 'pujar') {
         $controlador->pujar();
     } elseif ($accion === 'estado') {
         $controlador->obtenerEstadoVivo();
+    } elseif ($accion === 'toggle_estado' || $accion === 'toggle-estado') {
+        $controlador->toggleEstado();
+    } elseif ($accion === 'extender') {
+        $controlador->extenderTiempo();
+    } elseif ($accion === 'editar' || $accion === 'actualizar') {
+        $controlador->editarSubasta();
+    } elseif ($accion === 'datos_categorias') {
+        $controlador->obtenerDatosCategoriasApi();
+    } elseif ($accion === 'top_postores') {
+        $controlador->obtenerTopPostoresApi();
+    } elseif ($accion === 'ritmo_pujas') {
+        $controlador->obtenerRitmoPujasApi();
     }
 }
+
+
